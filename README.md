@@ -1,3 +1,10 @@
+MEMO
+
+* api/*でCRDを定義するGoファイルが置かれている。ここのGOファイルを編集することで、CRDのマニフェストファイルを生成することができる。
+* ↑ make manifestsでCRDマニフェストファイルを生成。config/crd配下のyamlファイルに変更が加わる。
+* make installで接続先クラスターにCRDをデプロイ。(今回はminikube)
+※make installでmake manifests & minikubeにデプロイまで一気通貫で行える。make runはコントローラーをminikubeで動かすときに必要。
+
 # password-operator-test
 // TODO(user): Add simple overview of use/purpose
 
