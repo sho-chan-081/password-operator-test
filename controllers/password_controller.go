@@ -48,6 +48,7 @@ type PasswordReconciler struct {
 // - https://pkg.go.dev/sigs.k8s.io/controller-runtime@v0.13.0/pkg/reconcile
 
 // カスタムリース作成（kubectl apply -f ****したら呼ばれるやつ）
+// create/updated/deletedしたときに呼ばれるやつ
 func (r *PasswordReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	logger := log.FromContext(ctx)
 
