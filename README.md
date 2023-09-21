@@ -6,6 +6,10 @@ MEMO
 ※make installでmake manifests & minikubeにデプロイまで一気通貫で行える。make runはコントローラーをminikubeで動かすときに必要。
 
 ```
+ minikube image load password-operator:v1
+```
+
+```
 // Fetch Password object
 	var password secretv1alpha1.Password
 	if err := r.Get(ctx, req.NamespacedName, &password); err != nil {
