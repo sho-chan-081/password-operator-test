@@ -5,6 +5,16 @@ MEMO
 * make installで接続先クラスターにCRDをデプロイ。(今回はminikube)
 ※make installでmake manifests & minikubeにデプロイまで一気通貫で行える。make runはコントローラーをminikubeで動かすときに必要。
 
+```
+// Fetch Password object
+	var password secretv1alpha1.Password
+	if err := r.Get(ctx, req.NamespacedName, &password); err != nil {
+		logger.Error(err, "Fetch Password object - failed")
+		return ctrl.Result{}, client.IgnoreNotFound(err)
+	}
+```
+client.IgnoreNotFound(err)でオブジェクト(deploymentとか)が削除されたときにReconsileを止める？＆オブジェクト消えたからもう処理しませんでっていうことをしている。
+
 # password-operator-test
 // TODO(user): Add simple overview of use/purpose
 
