@@ -1,22 +1,33 @@
-MEMO
+## Password Operator概要
+
+* 出来ること：```kind```が```Password```となっているマニフェストファイルをkube applyすると自動的にパスワードを生成して、Secretにパスワードを格納してくれる。
+
+### 処理の流れ
+1. マニフェストファイルをkube apply ***する
+1. マニフェストファイルをもとに```Password```オブジェクトが作られる
+1. ControllerはReconcile機能で```Password```オブジェクトの作成等の状況をWatch
+1. Passwordオブジェクトが作成されたら、対応した```Secret```を作成。Secretのfield欄に自動生成されたPasswordが保存される。
+
+
+## MEMO
 
 * api/*でCRDを定義するGoファイルが置かれている。ここのGOファイルを編集することで、CRDのマニフェストファイルを生成することができる。
 * ↑ make manifestsでCRDマニフェストファイルを生成。config/crd配下のyamlファイルに変更が加わる。
 * make installで接続先クラスターにCRDをデプロイ。(今回はminikube)
 ※make installでmake manifests & minikubeにデプロイまで一気通貫で行える。make runはコントローラーをminikubeで動かすときに必要。
 
-```
- minikube image load password-operator:v1
-```
+	```
+	minikube image load password-operator:v1
+	```
 
-```
-// Fetch Password object
-	var password secretv1alpha1.Password
-	if err := r.Get(ctx, req.NamespacedName, &password); err != nil {
-		logger.Error(err, "Fetch Password object - failed")
-		return ctrl.Result{}, client.IgnoreNotFound(err)
-	}
-```
+	```
+	// Fetch Password object
+		var password secretv1alpha1.Password
+		if err := r.Get(ctx, req.NamespacedName, &password); err != nil {
+			logger.Error(err, "Fetch Password object - failed")
+			return ctrl.Result{}, client.IgnoreNotFound(err)
+		}
+	```
 client.IgnoreNotFound(err)でオブジェクト(deploymentとか)が削除されたときにReconsileを止める？＆オブジェクト消えたからもう処理しませんでっていうことをしている。
 
 # password-operator-test
