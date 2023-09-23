@@ -18,6 +18,13 @@
 * make installで接続先クラスターにCRDをデプロイ。(今回はminikube)
 ※make installでmake manifests & minikubeにデプロイまで一気通貫で行える。make runはコントローラーをminikubeで動かすときに必要。
 
+* kubectl apply -f した時にvalidation error(パスワードが短すぎます的な）するときは、admission webhookを実装する。
+
+  ```
+  kubebuilder create webhook --group secret --version v1alpha1 --kind Password --programmatic-validation
+  ```
+
+
 	```
 	minikube image load password-operator:v1
 	```
