@@ -10,6 +10,7 @@
 
 ## 課題
 * PasswordStatusにReasonフィールドを追加する
+* 何故かValidationWebhookのCRDが上手いことk8sに入らないので復習する時に見直す
 
 ## MEMO
 
